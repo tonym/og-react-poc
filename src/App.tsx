@@ -1,6 +1,6 @@
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import { ButtonStyles, useTheme as OgUseTheme } from '@opensesame/gemini';
-import { AppBar, Button, ThemeOptions } from '@mui/material';
+import { AppBar, Button } from '@mui/material';
 
 const ogTheme = OgUseTheme() as any;
 
@@ -20,7 +20,7 @@ ogTheme.components = {
 
 delete ogTheme.spacing;
 
-const theme = createTheme(ogTheme as ThemeOptions);
+const theme = createTheme(ogTheme);
 
 const AppBarPrimary = styled(AppBar)({
   padding: theme.spacing(3)
