@@ -1,25 +1,56 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+import { ButtonStyles, useTheme as OgUseTheme } from '@opensesame/gemini';
+import { AppBar, Button, ThemeOptions } from '@mui/material';
+
+const ogTheme = OgUseTheme() as any;
+
+const buttonStyles = ButtonStyles(OgUseTheme()) as any;
+
+delete buttonStyles.root.backgroundColor;
+delete buttonStyles.root.color;
+delete buttonStyles.root['&:hover'];
+
+ogTheme.components = {
+  MuiButton: {
+    styleOverrides: {
+      root: buttonStyles.root
+    }
+  }
+};
+
+delete ogTheme.spacing;
+
+const theme = createTheme(ogTheme as ThemeOptions);
+
+const AppBarPrimary = styled(AppBar)({
+  padding: theme.spacing(3)
+});
+
+const AppWrapper = styled('div')({
+  paddingLeft: theme.spacing(3),
+  paddingRight: theme.spacing(3),
+  paddingTop: theme.spacing(10)
+});
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <AppWrapper>
+        <AppBarPrimary>Gemini for React</AppBarPrimary>
+        <div>
+          <Button variant="contained">Primary contained</Button>
+          <Button variant="outlined">Primary outlined</Button>
+        </div>
+        <div>
+          <Button color="secondary" variant="contained">
+            Secondary contained
+          </Button>
+          <Button color="secondary" variant="outlined">
+            Secondary outlined
+          </Button>
+        </div>
+      </AppWrapper>
+    </ThemeProvider>
   );
 }
 
